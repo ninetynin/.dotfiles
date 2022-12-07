@@ -49,7 +49,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty 
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -65,7 +65,7 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
-bindsym $mod+l focus up
+##bindsym $mod+l focus up  #NOTE: TODO using this for locking screen instead
 bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
@@ -96,7 +96,7 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+##bindsym $mod+s layout stacking --NOTE: TODO commented this out as using this keybiding for spotify instead and as im not using stack layout
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -108,6 +108,50 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
+
+#interactive screenshot by pressing printscreen
+bindsym Print exec gnome-screenshot -i 
+
+#crop-area screenshot by pressing Mod + printscreen
+bindsym $mod+Print exec gnome-screenshot -a
+
+# brightness controls: using brightnessctl
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+#bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-; if [ $(brightnessctl g) -lt 20 ]; then brightnessctl s 20%; fi
+#bindsym XF86MonBrightnessDown exec --no-startup-id bash -c 'brightnessctl set 5%-; if [ $(brightnessctl g) -lt 20 ]; then brightnessctl s 20%; fi'
+#TODO: Fuck this idk we cant use conditional statements in i3 config time to migrate
+# apparently u can set min value but im unable to do it try it again late ron TODO
+#IF ANYTHING GOES WRONG REMOVE THE BRIGHTNESSCTL SET 5%-; PART TODO TODO TODO
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl pause-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Application keybindings
+bindsym $mod+o exec --no-startup-id opera
+bindsym $mod+shift+o exec --no-startup-id opera --incognito
+bindsym $mod+b exec --no-startup-id brave-browser-beta
+bindsym $mod+shift+b exec --no-startup-id brave-browser-beta --incognito
+bindsym $mod+s exec --no-startup-id spotify
+bindsym $mod+n exec --no-startup-id nautilus
+bindsym $mod+shift+d exec --no-startup-id discord
+bindsym $mod+shift+n exec --no-startup-id nvim-qt
+
+# LOCK SCREEN
+#bindsym $mod+l exec --no-startup-id i3msg lock #TODO TODO TODO
+bindsym $mod+l exec --no-startup-id i3lock -c 444444
+#bindsym $mod+l exec --no-startup-id i3lock -i /home/anand/Pictures/wallpapers/main.png
+
+## brightness controls: using light
+#bindsym XF86MonBrightnessUp exec light -A 5
+#bindsym XF86MonBrightnessDown exec light -U 5
+#bindsym shift+XF86MonBrightnessUp exec light -A 25
+#bindsym shift+XF86MonBrightnessDown exec light -U 25
+### commented light way out since its not working -> TODO: find a way to make sure brightnessctl wont go below some value
+
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -181,10 +225,10 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-bindsym $mod+r mode "resize"
+#bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3status	
 }
